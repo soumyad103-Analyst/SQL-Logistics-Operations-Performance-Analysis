@@ -1,0 +1,27 @@
+select * from warehouses;
+select * from drivers;
+select * from shipments;
+SELECT 
+    SUM(CASE
+WHEN delivery_status = 'On-Time' THEN 1
+ELSE 0
+END) / COUNT(delivery_status) * 100.00 AS On_Time_Delivery_Percent
+FROM
+shipments;
+select w.warehouse_name, SUM(CASE
+WHEN delivery_status = 'On-Time' THEN 1
+ELSE 0
+END) / COUNT(delivery_status) * 100.00 AS On_Time_Delivery_Percent
+from warehouses w
+join shipments s on w.warehouse_id=s.warehouse_id
+group by warehouse_name
+order by warehouse_name asc;
+select d.driver_name,count(*) as total_shipments,d.experience_years,
+SUM(CASE
+WHEN s.delivery_status = 'On-Time' THEN 1
+ELSE 0
+END) / COUNT(*) * 100.00 AS On_Time_Delivery_Percent
+from shipments s
+join drivers d on s.driver_id=d.driver_id
+group by d.driver_name, d.experience_years
+order by On_Time_Delivery_Percent desc;
