@@ -1,0 +1,41 @@
+Create database warehouse;
+use warehouse;
+CREATE TABLE warehouses (
+    warehouse_id INT PRIMARY KEY,
+    warehouse_name VARCHAR(50),
+    city VARCHAR(50)
+);
+INSERT INTO warehouses VALUES
+(1, 'North Hub', 'Delhi'),
+(2, 'West Hub', 'Mumbai'),
+(3, 'South Hub', 'Bangalore');
+CREATE TABLE drivers (
+    driver_id INT PRIMARY KEY,
+    driver_name VARCHAR(50),
+    experience_years INT
+);
+INSERT INTO drivers VALUES
+(101, 'Ravi Kumar', 5),
+(102, 'Sanjay Patel', 2),
+(103, 'Imran Sheikh', 7),
+(104, 'Vikram Rao', 3);
+CREATE TABLE shipments (
+    shipment_id INT PRIMARY KEY,
+    warehouse_id INT,
+    driver_id INT,
+    shipment_date DATE,
+    delivery_date DATE,
+    delivery_status VARCHAR(20),
+    delivery_city VARCHAR(50),
+    FOREIGN KEY (warehouse_id) REFERENCES warehouses(warehouse_id),
+    FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
+);
+INSERT INTO shipments VALUES
+(1001, 1, 101, '2024-08-01', '2024-08-03', 'On-Time', 'Jaipur'),
+(1002, 1, 102, '2024-08-02', '2024-08-06', 'Late', 'Lucknow'),
+(1003, 2, 103, '2024-08-03', '2024-08-05', 'On-Time', 'Pune'),
+(1004, 2, 104, '2024-08-04', '2024-08-09', 'Late', 'Ahmedabad'),
+(1005, 3, 101, '2024-08-05', '2024-08-07', 'On-Time', 'Chennai'),
+(1006, 3, 102, '2024-08-06', '2024-08-10', 'Late', 'Hyderabad'),
+(1007, 1, 103, '2024-08-07', '2024-08-08', 'On-Time', 'Jaipur'),
+(1008, 2, 104, '2024-08-08', '2024-08-13', 'Late', 'Surat');
